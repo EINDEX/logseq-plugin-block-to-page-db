@@ -1,0 +1,41 @@
+{
+  "name": "logseq-plugin-block-to-page-db",
+  "version": "0.1.4",
+  "description": "Turn a block into a page with Logseq DB graph support.",
+  "type": "module",
+  "main": "index.html",
+  "author": "EINDEX",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eindex/logseq-plugin-block-to-page-db.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eindex/logseq-plugin-block-to-page-db/issues"
+  },
+  "homepage": "https://github.com/eindex/logseq-plugin-block-to-page-db#readme",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check main.js && node --check src/block-to-page.mjs && npm test"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "assets",
+    "icon.svg",
+    "index.html",
+    "main.js",
+    "src",
+    "vendor"
+  ],
+  "keywords": [
+    "logseq",
+    "logseq-plugin",
+    "db-graph"
+  ],
+  "license": "MIT",
+  "logseq": {
+    "id": "logseq-block-to-page-db",
+    "title": "Block to Page DB",
+    "icon": "./icon.svg"
+  }
+}

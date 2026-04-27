@@ -1,0 +1,34 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" rx="24" fill="#F8FAFC"/>
+  <text x="48" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Block to Page DB</text>
+  <text x="48" y="92" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="16">Move child blocks into a DB graph page from the block menu or slash command.</text>
+
+  <rect x="48" y="128" width="390" height="334" rx="14" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="76" y="168" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Before</text>
+  <circle cx="86" cy="210" r="5" fill="#2563EB"/>
+  <text x="104" y="216" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="18">Project Alpha #Project</text>
+  <rect x="104" y="232" width="122" height="24" rx="6" fill="#DBEAFE"/>
+  <text x="116" y="249" fill="#1D4ED8" font-family="Inter, Arial, sans-serif" font-size="13">status: active</text>
+  <circle cx="114" cy="292" r="4" fill="#64748B"/>
+  <text x="132" y="297" fill="#334155" font-family="Inter, Arial, sans-serif" font-size="16">Collect notes</text>
+  <circle cx="114" cy="332" r="4" fill="#64748B"/>
+  <text x="132" y="337" fill="#334155" font-family="Inter, Arial, sans-serif" font-size="16">Define next action</text>
+  <rect x="76" y="382" width="236" height="42" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+  <text x="96" y="409" fill="#1D4ED8" font-family="Inter, Arial, sans-serif" font-size="16">Turn into page</text>
+
+  <path d="M474 295H574" stroke="#2563EB" stroke-width="8" stroke-linecap="round"/>
+  <path d="M550 271L574 295L550 319" stroke="#2563EB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="612" y="128" width="300" height="334" rx="14" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="640" y="168" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">After</text>
+  <rect x="640" y="192" width="184" height="40" rx="8" fill="#E0F2FE"/>
+  <text x="660" y="218" fill="#0369A1" font-family="Inter, Arial, sans-serif" font-size="18">[[Project Alpha]]</text>
+  <rect x="640" y="252" width="210" height="152" rx="10" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="664" y="284" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Project Alpha</text>
+  <rect x="664" y="300" width="122" height="24" rx="6" fill="#DBEAFE"/>
+  <text x="676" y="317" fill="#1D4ED8" font-family="Inter, Arial, sans-serif" font-size="13">status: active</text>
+  <circle cx="674" cy="356" r="4" fill="#64748B"/>
+  <text x="692" y="361" fill="#334155" font-family="Inter, Arial, sans-serif" font-size="16">Collect notes</text>
+  <circle cx="674" cy="390" r="4" fill="#64748B"/>
+  <text x="692" y="395" fill="#334155" font-family="Inter, Arial, sans-serif" font-size="16">Define next action</text>
+</svg>
