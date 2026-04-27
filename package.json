@@ -15,7 +15,10 @@
   "homepage": "https://github.com/eindex/logseq-plugin-block-to-page-db#readme",
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "check": "node --check main.js && node --check src/block-to-page.mjs && npm test"
+    "check": "node --check main.js && node --check src/block-to-page.mjs && npm test",
+    "release:patch": "npm version patch -m \"release: v%s\"",
+    "release:minor": "npm version minor -m \"release: v%s\"",
+    "release:major": "npm version major -m \"release: v%s\""
   },
   "files": [
     "README.md",

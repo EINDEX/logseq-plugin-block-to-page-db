@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5 - 2026-04-27
+
+- Add a Logseq DB graph demo screenshot.
+- Mark the marketplace package as web supported.
+- Add EINDEX GitHub Sponsors metadata.
+
 ## 0.1.4 - 2026-04-27
 
 - Add DB graph support for turning a block with children into a page.

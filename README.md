@@ -2,7 +2,7 @@
 
 Turn a Logseq block with children into a DB graph page.
 
-![Block to Page DB demo](assets/demo.svg)
+![Block to Page DB demo](assets/demo.png)
 
 ## Features
 
@@ -73,7 +73,14 @@ npm run check
 
 ## Release
 
-Create a GitHub tag such as `v0.1.4`. The release workflow builds and uploads:
+Run the semver release command for the change size:
+
+```sh
+npm run release:patch
+git push origin main --follow-tags
+```
+
+Use `release:minor` or `release:major` when the release scope calls for it. The release workflow builds and uploads:
 
 - `logseq-block-to-page-db.zip`
 - `package.json`
@@ -83,3 +90,7 @@ Marketplace files live under `marketplace/logseq-block-to-page-db`.
 ## Credit
 
 Inspired by [hyrijk/logseq-plugin-block-to-page](https://github.com/hyrijk/logseq-plugin-block-to-page).
+
+## Support
+
+Sponsor EINDEX on [GitHub Sponsors](https://github.com/sponsors/EINDEX).

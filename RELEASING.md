@@ -10,12 +10,14 @@
 npm run check
 ```
 
-4. Create and push a version tag:
+4. Create a semver release commit and tag:
 
 ```sh
-git tag v0.1.4
-git push origin v0.1.4
+npm run release:patch
+git push origin main --follow-tags
 ```
+
+Use `release:minor` or `release:major` when the release scope calls for it.
 
 The GitHub workflow uploads `logseq-block-to-page-db.zip` and `package.json` to the release.
 
