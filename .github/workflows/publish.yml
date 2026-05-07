@@ -29,10 +29,19 @@ jobs:
 
       - name: Build release zip
         run: |
-          mkdir -p "release/${PLUGIN_NAME}"
-          cp -R README.md LICENSE package.json icon.svg index.html main.js src vendor assets "release/${PLUGIN_NAME}/"
-          cd release
-          zip -r "${PLUGIN_NAME}.zip" "${PLUGIN_NAME}"
+          mkdir -p release/stage
+          cp -R README.md LICENSE package.json icon.svg index.html main.js src vendor assets release/stage/
+          cd release/stage
+          zip -r "../${PLUGIN_NAME}.zip" README.md LICENSE package.json icon.svg index.html main.js src vendor assets
+
+      - name: Smoke check release zip
+        run: |
+          unzip -Z1 "release/${PLUGIN_NAME}.zip" | tee release/zip-entries.txt
+          grep -Fxq "package.json" release/zip-entries.txt
+          grep -Fxq "index.html" release/zip-entries.txt
+          grep -Fxq "main.js" release/zip-entries.txt
+          package_main="$(unzip -p "release/${PLUGIN_NAME}.zip" package.json | node -e "let input = ''; process.stdin.on('data', chunk => input += chunk); process.stdin.on('end', () => process.stdout.write(JSON.parse(input).main));")"
+          test "$package_main" = "index.html"
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
