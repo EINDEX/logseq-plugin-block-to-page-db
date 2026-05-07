@@ -4,22 +4,13 @@
 
 1. Push this plugin directory as a standalone repository.
 2. Confirm `package.json` and `marketplace/logseq-block-to-page-db/manifest.json` use the final GitHub repo name.
-3. Run:
+3. Open a pull request with a conventional commit subject such as `fix: ...` or `feat: ...`.
+4. Merge the pull request into `main`.
 
-```sh
-npm run check
-```
-
-4. Create a semver release commit and tag:
-
-```sh
-npm run release:patch
-git push origin main --follow-tags
-```
-
-Use `release:minor` or `release:major` when the release scope calls for it.
-
-The GitHub workflow uploads `logseq-block-to-page-db.zip` and `package.json` to the release.
+The GitHub workflow runs `semantic-release` on `main`. It analyzes conventional
+commit subjects, updates `package.json` and `CHANGELOG.md`, creates the
+`vX.Y.Z` tag, creates the GitHub Release, and uploads
+`logseq-block-to-page-db.zip` plus `package.json`.
 
 The release zip is also used by Logseq web. Keep `package.json`, `index.html`,
 and `main.js` at the zip root so the web plugin entry checker can read
@@ -28,13 +19,9 @@ and `main.js` at the zip root so the web plugin entry checker can read
 To verify the zip shape locally:
 
 ```sh
-PLUGIN_NAME=logseq-block-to-page-db
-rm -rf release
-mkdir -p release/stage
-cp -R README.md LICENSE package.json icon.svg index.html main.js src vendor assets release/stage/
-(cd release/stage && zip -r "../${PLUGIN_NAME}.zip" README.md LICENSE package.json icon.svg index.html main.js src vendor assets)
-unzip -Z1 "release/${PLUGIN_NAME}.zip"
-unzip -p "release/${PLUGIN_NAME}.zip" package.json | jq -r .main
+npm run build:release
+unzip -Z1 release/logseq-block-to-page-db.zip
+unzip -p release/logseq-block-to-page-db.zip package.json | jq -r .main
 ```
 
 Expected output: `index.html`.
