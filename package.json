@@ -16,9 +16,9 @@
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "check": "node --check main.js && node --check src/block-to-page.mjs && npm test",
-    "release:patch": "npm version patch -m \"release: v%s\"",
-    "release:minor": "npm version minor -m \"release: v%s\"",
-    "release:major": "npm version major -m \"release: v%s\""
+    "build:release": "rm -rf release && mkdir -p release/stage && cp -R README.md LICENSE package.json icon.svg index.html main.js src vendor assets release/stage/ && (cd release/stage && zip -r ../logseq-block-to-page-db.zip README.md LICENSE package.json icon.svg index.html main.js src vendor assets) && npm run check:release",
+    "check:release": "unzip -Z1 release/logseq-block-to-page-db.zip > release/zip-entries.txt && grep -Fxq package.json release/zip-entries.txt && grep -Fxq index.html release/zip-entries.txt && grep -Fxq main.js release/zip-entries.txt && node -e \"const cp=require('node:child_process');const data=cp.execFileSync('unzip',['-p','release/logseq-block-to-page-db.zip','package.json'],{encoding:'utf8'});if(JSON.parse(data).main !== 'index.html') process.exit(1);\"",
+    "release": "semantic-release"
   },
   "files": [
     "README.md",
@@ -40,5 +40,14 @@
     "id": "logseq-block-to-page-db",
     "title": "Block to Page DB",
     "icon": "./icon.svg"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "semantic-release": "^25.0.3"
   }
 }
