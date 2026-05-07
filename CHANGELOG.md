@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/eindex/logseq-plugin-block-to-page-db/compare/v0.1.5...v0.1.6) (2026-05-07)
+
+
+### Bug Fixes
+
+* package web release zip ([26790d6](https://github.com/eindex/logseq-plugin-block-to-page-db/commit/26790d6a2f3b249d5c60d23a6f1f3836290498a6))
+
 # Changelog
 
 ## 0.1.5 - 2026-04-27
