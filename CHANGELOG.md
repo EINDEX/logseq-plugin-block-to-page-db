@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/eindex/logseq-plugin-block-to-page-db/compare/v0.1.6...v0.2.0) (2026-05-14)
+
+
+### Features
+
+* add current page conversion command ([157194e](https://github.com/eindex/logseq-plugin-block-to-page-db/commit/157194edb13d9ba15cc27df50abd27b3513c2929))
+
 ## [0.1.6](https://github.com/eindex/logseq-plugin-block-to-page-db/compare/v0.1.5...v0.1.6) (2026-05-07)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "logseq-plugin-block-to-page-db",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Turn a block into a page with Logseq DB graph support.",
   "type": "module",
   "main": "index.html",
