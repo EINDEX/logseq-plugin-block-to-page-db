@@ -7,6 +7,10 @@
 
 # Changelog
 
+## Unreleased
+
+- Add `Turn Into Current Page` slash and context-menu commands.
+
 ## 0.1.5 - 2026-04-27
 
 - Add a Logseq DB graph demo screenshot.

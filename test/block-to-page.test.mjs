@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   getConversionPlan,
+  turnBlockIntoCurrentPage,
   turnBlockIntoPage,
 } from "../src/block-to-page.mjs";
 
@@ -242,6 +243,31 @@ test("turnBlockIntoPage keeps source metadata on explicit page references", asyn
     ["appendBlockInPage", "Project ABC", "", { sibling: false }],
     ["moveBlock", "child-1", "anchor-1", { children: false, before: false }],
     ["removeBlock", "anchor-1"],
+    ["exitEditingMode"],
+  ]);
+});
+
+test("turnBlockIntoCurrentPage uses the source page as the target and keeps source content", async () => {
+  const { logseq, calls } = createLogseqMock({
+    block: {
+      uuid: "source-1",
+      content: "Task should be done",
+      page: { name: "2026-05-15" },
+      properties: { status: "active" },
+      tags: [{ uuid: "tag-project" }],
+      children: [{ uuid: "child-1" }],
+    },
+    pageBlocks: [{ uuid: "last-1", content: "existing" }],
+    page: { uuid: "page-1", name: "2026-05-15" },
+  });
+
+  await turnBlockIntoCurrentPage(logseq, "source-1");
+
+  assert.deepEqual(calls, [
+    ["getBlock", "source-1", { includeChildren: true }],
+    ["getPage", "2026-05-15"],
+    ["getPageBlocksTree", "2026-05-15"],
+    ["moveBlock", "child-1", "last-1", { children: false, before: false }],
     ["exitEditingMode"],
   ]);
 });

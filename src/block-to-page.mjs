@@ -86,6 +86,33 @@ export function getConversionPlan(content = "") {
   };
 }
 
+function pageNameFromBlock(block) {
+  const page = block?.page;
+  if (typeof page === "string") {
+    return page.trim();
+  }
+
+  return (
+    page?.originalName ??
+    page?.name ??
+    page?.title ??
+    ""
+  ).trim();
+}
+
+function getCurrentPagePlan(block) {
+  const pageName = pageNameFromBlock(block);
+  if (!hasText(pageName)) {
+    return null;
+  }
+
+  return {
+    pageName,
+    usesExistingPageRef: true,
+    nextSourceContent: null,
+  };
+}
+
 async function getPageBlocks(editor, pageName) {
   return asArray(await editor.getPageBlocksTree(pageName));
 }
@@ -204,7 +231,7 @@ async function expandSourceBlockIfNeeded(editor, block) {
   }
 }
 
-export async function turnBlockIntoPage(logseq, blockId) {
+async function turnBlockWithPlan(logseq, blockId, getPlan) {
   const editor = logseq?.Editor;
   if (!editor) {
     throw new Error("Logseq Editor API is unavailable.");
@@ -217,7 +244,7 @@ export async function turnBlockIntoPage(logseq, blockId) {
     return { status: "skipped" };
   }
 
-  const plan = getConversionPlan(blockContent(block));
+  const plan = getPlan(block);
   if (!plan) {
     return { status: "skipped" };
   }
@@ -271,4 +298,12 @@ export async function turnBlockIntoPage(logseq, blockId) {
   await expandSourceBlockIfNeeded(editor, block);
 
   return { status: "ok", pageName: plan.pageName };
+}
+
+export async function turnBlockIntoPage(logseq, blockId) {
+  return turnBlockWithPlan(logseq, blockId, (block) => getConversionPlan(blockContent(block)));
+}
+
+export async function turnBlockIntoCurrentPage(logseq, blockId) {
+  return turnBlockWithPlan(logseq, blockId, getCurrentPagePlan);
 }

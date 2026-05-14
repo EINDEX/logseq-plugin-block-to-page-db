@@ -8,6 +8,7 @@ Turn a Logseq block with children into a DB graph page.
 
 - Adds `Turn Into Page` to the slash command menu.
 - Adds `Turn into page` to the block context menu.
+- Adds `Turn Into Current Page` for moving children into the source block's page.
 - Uses the selected block's first line as the target page name.
 - Uses the last page reference in the first line as the target page when page references are present.
 - Rewrites a plain first line to a page reference.
@@ -51,6 +52,18 @@ Fix [[Issue 123]] for [[Project ABC]]
 ```
 
 Uses `[[Project ABC]]` as the target page.
+
+### Current page command
+
+On `[[2026-05-15]]`:
+
+```text
+Task should be done
+  Collect notes
+  Define next action
+```
+
+`Turn Into Current Page` moves the child blocks to the end of `[[2026-05-15]]` and keeps the source block text unchanged.
 
 ## DB Graph Support
 
