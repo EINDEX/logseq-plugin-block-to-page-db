@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/eindex/logseq-plugin-block-to-page-db/compare/v0.2.0...v0.2.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* group moved blocks under source page ([4be9d52](https://github.com/eindex/logseq-plugin-block-to-page-db/commit/4be9d52e210e266c91416c665114f0da896bd773))
+
 # [0.2.0](https://github.com/eindex/logseq-plugin-block-to-page-db/compare/v0.1.6...v0.2.0) (2026-05-14)
 
 
