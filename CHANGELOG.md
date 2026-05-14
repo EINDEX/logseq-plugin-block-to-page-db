@@ -16,7 +16,7 @@
 
 ## Unreleased
 
-- Add `Turn Into Current Page` slash and context-menu commands.
+- Add `Turn Into Page With Source` slash and context-menu commands.
 
 ## 0.1.5 - 2026-04-27
 

@@ -1,5 +1,5 @@
 import {
-  turnBlockIntoCurrentPage,
+  turnBlockIntoPageWithSource,
   turnBlockIntoPage,
 } from "./src/block-to-page.mjs";
 
@@ -16,8 +16,8 @@ async function run(event, handler) {
 plugin
   .ready(() => {
     plugin.Editor.registerSlashCommand("Turn Into Page", (event) => run(event, turnBlockIntoPage));
-    plugin.Editor.registerSlashCommand("Turn Into Current Page", (event) => run(event, turnBlockIntoCurrentPage));
+    plugin.Editor.registerSlashCommand("Turn Into Page With Source", (event) => run(event, turnBlockIntoPageWithSource));
     plugin.Editor.registerBlockContextMenuItem("Turn into page", (event) => run(event, turnBlockIntoPage));
-    plugin.Editor.registerBlockContextMenuItem("Turn into current page", (event) => run(event, turnBlockIntoCurrentPage));
+    plugin.Editor.registerBlockContextMenuItem("Turn into page with source", (event) => run(event, turnBlockIntoPageWithSource));
   })
   .catch(console.error);

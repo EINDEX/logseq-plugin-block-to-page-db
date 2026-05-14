@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   getConversionPlan,
-  turnBlockIntoCurrentPage,
+  turnBlockIntoPageWithSource,
   turnBlockIntoPage,
 } from "../src/block-to-page.mjs";
 
@@ -41,6 +41,10 @@ function createLogseqMock({
       const anchor = { uuid: "anchor-1", content };
       pageBlocks = [anchor];
       return anchor;
+    },
+    async insertBlock(target, content, opts) {
+      calls.push(["insertBlock", target, content, opts]);
+      return { uuid: "source-anchor-1", content };
     },
     async moveBlock(src, target, opts) {
       calls.push(["moveBlock", src, target, opts]);
@@ -247,27 +251,29 @@ test("turnBlockIntoPage keeps source metadata on explicit page references", asyn
   ]);
 });
 
-test("turnBlockIntoCurrentPage uses the source page as the target and keeps source content", async () => {
+test("turnBlockIntoPageWithSource groups moved children under a source page reference", async () => {
   const { logseq, calls } = createLogseqMock({
     block: {
       uuid: "source-1",
-      content: "Task should be done",
+      content: "Task should be done [[Project ABC]]",
       page: { name: "2026-05-15" },
       properties: { status: "active" },
       tags: [{ uuid: "tag-project" }],
-      children: [{ uuid: "child-1" }],
+      children: [{ uuid: "child-1" }, { uuid: "child-2" }],
     },
     pageBlocks: [{ uuid: "last-1", content: "existing" }],
-    page: { uuid: "page-1", name: "2026-05-15" },
+    page: { uuid: "page-1", name: "Project ABC" },
   });
 
-  await turnBlockIntoCurrentPage(logseq, "source-1");
+  await turnBlockIntoPageWithSource(logseq, "source-1");
 
   assert.deepEqual(calls, [
     ["getBlock", "source-1", { includeChildren: true }],
-    ["getPage", "2026-05-15"],
-    ["getPageBlocksTree", "2026-05-15"],
-    ["moveBlock", "child-1", "last-1", { children: false, before: false }],
+    ["getPage", "Project ABC"],
+    ["getPageBlocksTree", "Project ABC"],
+    ["insertBlock", "last-1", "[[2026-05-15]]", { sibling: true, before: false }],
+    ["moveBlock", "child-1", "source-anchor-1", { children: true, before: false }],
+    ["moveBlock", "child-2", "child-1", { children: false, before: false }],
     ["exitEditingMode"],
   ]);
 });

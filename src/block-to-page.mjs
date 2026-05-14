@@ -100,19 +100,6 @@ function pageNameFromBlock(block) {
   ).trim();
 }
 
-function getCurrentPagePlan(block) {
-  const pageName = pageNameFromBlock(block);
-  if (!hasText(pageName)) {
-    return null;
-  }
-
-  return {
-    pageName,
-    usesExistingPageRef: true,
-    nextSourceContent: null,
-  };
-}
-
 async function getPageBlocks(editor, pageName) {
   return asArray(await editor.getPageBlocksTree(pageName));
 }
@@ -216,6 +203,29 @@ async function getTargetAnchor(editor, pageName, metadata) {
   };
 }
 
+async function appendSourceAnchor(editor, pageName, targetAnchor, sourcePageName) {
+  const content = `[[${sourcePageName}]]`;
+
+  if (typeof editor.insertBlock === "function" && targetAnchor?.uuid) {
+    const block = await editor.insertBlock(targetAnchor.uuid, content, {
+      sibling: true,
+      before: false,
+    });
+    if (block) {
+      return block;
+    }
+  }
+
+  if (typeof editor.appendBlockInPage === "function") {
+    const block = await editor.appendBlockInPage(pageName, content, { sibling: false });
+    if (block) {
+      return block;
+    }
+  }
+
+  return null;
+}
+
 async function expandSourceBlockIfNeeded(editor, block) {
   if (!blockIsCollapsed(block)) {
     return;
@@ -231,7 +241,7 @@ async function expandSourceBlockIfNeeded(editor, block) {
   }
 }
 
-async function turnBlockWithPlan(logseq, blockId, getPlan) {
+async function turnBlockWithPlan(logseq, blockId, getPlan, options = {}) {
   const editor = logseq?.Editor;
   if (!editor) {
     throw new Error("Logseq Editor API is unavailable.");
@@ -263,13 +273,29 @@ async function turnBlockWithPlan(logseq, blockId, getPlan) {
   }
 
   let targetUuid = targetAnchor.uuid;
+  const sourcePageName = options.groupBySourcePage ? pageNameFromBlock(block) : null;
+  if (options.groupBySourcePage) {
+    if (!hasText(sourcePageName)) {
+      return { status: "skipped" };
+    }
+
+    const sourceAnchor = await appendSourceAnchor(editor, plan.pageName, targetAnchor, sourcePageName);
+    if (!sourceAnchor?.uuid) {
+      await logseq?.App?.showMsg?.("source page anchor error", "error");
+      return { status: "failed" };
+    }
+    targetUuid = sourceAnchor.uuid;
+  }
+
+  let firstMovedChild = true;
   for (const child of children) {
     try {
       await editor.moveBlock(child.uuid, targetUuid, {
-        children: false,
+        children: Boolean(options.groupBySourcePage && firstMovedChild),
         before: false,
       });
       targetUuid = child.uuid;
+      firstMovedChild = false;
     } catch (error) {
       console.error("moveBlock error", error);
       await logseq?.App?.showMsg?.("move block error", "error");
@@ -304,6 +330,11 @@ export async function turnBlockIntoPage(logseq, blockId) {
   return turnBlockWithPlan(logseq, blockId, (block) => getConversionPlan(blockContent(block)));
 }
 
-export async function turnBlockIntoCurrentPage(logseq, blockId) {
-  return turnBlockWithPlan(logseq, blockId, getCurrentPagePlan);
+export async function turnBlockIntoPageWithSource(logseq, blockId) {
+  return turnBlockWithPlan(
+    logseq,
+    blockId,
+    (block) => getConversionPlan(blockContent(block)),
+    { groupBySourcePage: true },
+  );
 }
